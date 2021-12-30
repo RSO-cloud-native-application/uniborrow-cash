@@ -12,6 +12,8 @@ kumuluzee:
       connection-url: jdbc:postgresql://tyke.db.elephantsql.com/ystndsiu
       username: ystndsiu
       password: nH1g_ZvhEVo-nxMhq8SQa2XFH_10ZeWV
+      pool:
+        max-size: 1
   discovery:
     consul:
       agent: http://localhost:8500
@@ -19,6 +21,11 @@ kumuluzee:
       web-instrumentation:
         - name: cash-endpoint
           url-pattern: /v1/cash/*
+  health:
+    checks:
+      data-source-health-check:
+        type: liveness
+        jndi-name: jdbc/CashDB
   logs:
     config-file: '<?xml version="1.0" encoding="UTF-8"?>
                             <Configuration name="comments">

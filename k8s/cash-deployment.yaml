@@ -13,7 +13,8 @@ spec:
         app: uniborrow-cash
     spec:
       containers:
-        - image: efodx/uniborrow-cash:latest
+        - image:
+            efodx/uniborrow-cash:2021-12-31-02-40-34
           name: uniborrow-cash
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -25,10 +26,12 @@ spec:
                 secretKeyRef:
                   name: uniborrow-cash-db-pass
                   key: password
-            - name: KUMULUZEE_CONFIG_CONSUL_AGENT
-              value: http://consul-server:8500/
-            - name: KUMULUZEE_DISCOVERY_CONSUL_AGENT
-              value: http://consul-server:8500/
+            - name: KUMULUZEE_SERVER_BASEURL
+              value: http://uniborrow-cash:8080
+            - name: KUMULUZEE_CONFIG_ETCD_HOSTS
+              value: http://etcd:2379
+            - name: KUMULUZEE_DISCOVERY_ETCD_HOSTS
+              value: http://etcd:2379
           ports:
             - containerPort: 8080
               name: server
