@@ -15,7 +15,7 @@ public class TransactionEntity {
     private Integer id;
 
     @Column
-    private Integer cash;
+    private Float cash;
 
     @Column
     private Instant timestamp;

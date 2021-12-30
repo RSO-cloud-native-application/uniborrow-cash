@@ -17,7 +17,7 @@ public class CashEntity {
     private Integer userId;
 
     @Column(name = "current_cash")
-    private Integer currentCash;
+    private Float currentCash;
 
 }
 

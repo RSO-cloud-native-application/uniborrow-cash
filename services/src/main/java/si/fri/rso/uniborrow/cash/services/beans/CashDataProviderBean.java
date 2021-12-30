@@ -23,13 +23,11 @@ public class CashDataProviderBean {
     @Inject
     private UsersService usersService;
 
-
     @Inject
     private EntityManager em;
 
-
     @Counted
-    public CashEntity addCash(Integer userId, Integer amount) {
+    public CashEntity addCash(Integer userId, Float amount) {
         if (!usersService.checkUserExists(userId)) {
             throw new NotAllowedException("User doesn't exist.");
         }
@@ -63,7 +61,7 @@ public class CashDataProviderBean {
     }
 
 
-    public TransactionEntity sendCash(Integer fromUserId, Integer toUserId, Integer amount) {
+    public TransactionEntity sendCash(Integer fromUserId, Integer toUserId, Float amount) {
         if (!usersService.checkUserExists(fromUserId) || !usersService.checkUserExists(toUserId)) {
             throw new NotAllowedException("User doesn't exist.");
         }
@@ -105,7 +103,7 @@ public class CashDataProviderBean {
                 .getResultList();
     }
 
-    private CashEntity createNewWithAmount(Integer userId, Integer amount) {
+    private CashEntity createNewWithAmount(Integer userId, Float amount) {
         if (!usersService.checkUserExists(userId)) {
             throw new IllegalArgumentException("User doesn't exist.");
         }
@@ -125,7 +123,7 @@ public class CashDataProviderBean {
         return cashData;
     }
 
-    private TransactionEntity createTransaction(Integer userFrom, Integer userTo, Integer amount) {
+    private TransactionEntity createTransaction(Integer userFrom, Integer userTo, Float amount) {
         if (usersService.checkUserExists(userFrom) && usersService.checkUserExists(userTo)) {
             TransactionEntity transactionEntity = new TransactionEntity();
             transactionEntity.setCash(amount);
