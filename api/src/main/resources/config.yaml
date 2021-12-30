@@ -14,9 +14,14 @@ kumuluzee:
       password: nH1g_ZvhEVo-nxMhq8SQa2XFH_10ZeWV
       pool:
         max-size: 1
+  config:
+    start-retry-delay-ms: 500
+    max-retry-delay-ms: 900000
+    etcd:
+      hosts: 'http://localhost:2379'
   discovery:
-    consul:
-      agent: http://localhost:8500
+    etcd:
+      hosts: 'http://localhost:2379'
     metrics:
       web-instrumentation:
         - name: cash-endpoint
