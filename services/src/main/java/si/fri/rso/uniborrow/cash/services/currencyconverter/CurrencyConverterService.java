@@ -13,7 +13,7 @@ public class CurrencyConverterService {
 
     private Logger log = Logger.getLogger(UsersService.class.getName());
 
-    private WebTarget webTarget = ClientBuilder.newClient().target("https://currency-converter5.p.rapidapi.com/currency/convert");
+    private WebTarget webTarget = ClientBuilder.newClient().target("https://currency-exchange.p.rapidapi.com/exchange");
 
     public float convertCash(float cash, String currencyFrom, String currencyTo) {
         Float response = webTarget.
