@@ -4,6 +4,7 @@
         <non-jta-data-source>jdbc/cashDS</non-jta-data-source>
 
         <class>si.fri.rso.uniborrow.cash.models.entities.CashEntity</class>
+        <class>si.fri.rso.uniborrow.cash.models.entities.TransactionEntity</class>
         <class>si.fri.rso.uniborrow.cash.models.converters.InstantAttributeConverter</class>
 
         <properties>
