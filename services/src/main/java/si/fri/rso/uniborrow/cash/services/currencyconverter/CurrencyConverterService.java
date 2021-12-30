@@ -19,12 +19,11 @@ public class CurrencyConverterService {
         Float response = webTarget.
                 queryParam("from", currencyFrom).
                 queryParam("to", currencyTo).
-                queryParam("q", cash).
                 request(MediaType.APPLICATION_JSON_TYPE).
                 header("x-rapidapi-host", "currency-exchange.p.rapidapi.com").
                 header("x-rapidapi-key", "ea575f1580msh636fdf0dbab5542p1aa20cjsnd7d2d48fd4b0").
                 buildGet().
                 invoke(Float.class);
-        return response;
+        return response * cash;
     }
 }
