@@ -15,11 +15,6 @@ kumuluzee:
   discovery:
     consul:
       agent: http://localhost:8500
-  health:
-    checks:
-      data-source-health-check:
-        type: liveness
-        jndi-name: jdbc/cashDS
     metrics:
       web-instrumentation:
         - name: cash-endpoint
