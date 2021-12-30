@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import java.util.List;
 import java.util.logging.Logger;
 
 @Log
@@ -64,4 +65,10 @@ public class CashDataResource {
         return Response.status(Response.Status.OK).entity(transactionEntity).build();
     }
 
+    @GET
+    @Path("/transactions/{userId}")
+    public Response getUserTransactions(@PathParam("userId") Integer userId) {
+        List<TransactionEntity> transactionEntityList = cashDataProviderBean.getCashTransactionsByUserId(userId);
+        return Response.status(Response.Status.OK).entity(transactionEntityList).build();
+    }
 }

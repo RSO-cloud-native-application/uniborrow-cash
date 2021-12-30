@@ -6,12 +6,7 @@ import javax.persistence.*;
 import java.time.Instant;
 
 @Entity
-@Table(name = "cash")
-@NamedQueries(value =
-        {
-                @NamedQuery(name = "LoanEntity.getAll",
-                        query = "SELECT im FROM CashEntity im")
-        })
+@Table(name = "transactions")
 @Data
 public class TransactionEntity {
 

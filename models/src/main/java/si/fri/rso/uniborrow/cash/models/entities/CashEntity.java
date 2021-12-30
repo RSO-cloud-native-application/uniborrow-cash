@@ -6,11 +6,6 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "cash")
-@NamedQueries(value =
-        {
-                @NamedQuery(name = "LoanEntity.getAll",
-                        query = "SELECT im FROM CashEntity im")
-        })
 @Data
 public class CashEntity {
 
