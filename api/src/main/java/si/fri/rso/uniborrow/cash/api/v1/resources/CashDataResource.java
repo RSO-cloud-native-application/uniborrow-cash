@@ -53,8 +53,10 @@ public class CashDataResource {
     @POST
     @Path("/{userId}/withdraw")
     public Response withdrawCash(@PathParam("userId") Integer userId,
-                                 @QueryParam("amount") Float amount) {
-        CashEntity acceptedCash = cashDataProviderBean.addCash(userId, -amount);
+                                 @QueryParam("amount") Float amount,
+                                 @QueryParam("currency") String currency) {
+        float convertedCash = currencyConverterService.convertCash(amount, "EUR", currency);
+        CashEntity acceptedCash = cashDataProviderBean.addCash(userId, -convertedCash);
         if (acceptedCash == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
@@ -64,8 +66,10 @@ public class CashDataResource {
     @POST
     @Path("/{fromUserId}/send/{toUserId}")
     public Response sendCash(@PathParam("fromUserId") Integer fromUserId, @PathParam("toUserId") Integer toUserId,
-                             @QueryParam("amount") Float amount) {
-        TransactionEntity transactionEntity = cashDataProviderBean.sendCash(fromUserId, toUserId, amount);
+                             @QueryParam("amount") Float amount,
+                             @QueryParam("currency") String currency) {
+        float convertedCash = currencyConverterService.convertCash(amount, "EUR", currency);
+        TransactionEntity transactionEntity = cashDataProviderBean.sendCash(fromUserId, toUserId, convertedCash);
         if (transactionEntity == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
         }
