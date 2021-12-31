@@ -55,7 +55,9 @@ public class CashDataProviderBean {
     public CashEntity getCashByUserId(Integer userId) {
         CashEntity cashData = getEntityByUserId(userId);
         if (cashData == null) {
-            throw new NotFoundException();
+            cashData = new CashEntity();
+            cashData.setCurrentCash(0f);
+            cashData.setUserId(userId);
         }
         return cashData;
     }
