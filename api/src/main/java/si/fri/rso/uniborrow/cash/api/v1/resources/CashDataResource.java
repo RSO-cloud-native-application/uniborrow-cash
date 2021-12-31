@@ -40,9 +40,9 @@ public class CashDataResource {
 
     @POST
     @Path("/{userId}/add")
-    public Response acceptCash(@PathParam("userId") Integer userId,
-                               @QueryParam("amount") Float amount, @QueryParam("currency") String currency) {
-        float convertedCash = currencyConverterService.convertCash(amount, "EUR", currency);
+    public Response addCash(@PathParam("userId") Integer userId,
+                            @QueryParam("amount") Float amount, @QueryParam("currency") String currency) {
+        float convertedCash = currencyConverterService.convertCash(amount, currency, "EUR");
         CashEntity acceptedCash = cashDataProviderBean.addCash(userId, convertedCash);
         if (acceptedCash == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -55,7 +55,7 @@ public class CashDataResource {
     public Response withdrawCash(@PathParam("userId") Integer userId,
                                  @QueryParam("amount") Float amount,
                                  @QueryParam("currency") String currency) {
-        float convertedCash = currencyConverterService.convertCash(amount, "EUR", currency);
+        float convertedCash = currencyConverterService.convertCash(amount, currency, "EUR");
         CashEntity acceptedCash = cashDataProviderBean.addCash(userId, -convertedCash);
         if (acceptedCash == null) {
             return Response.status(Response.Status.NOT_FOUND).build();
@@ -68,7 +68,7 @@ public class CashDataResource {
     public Response sendCash(@PathParam("fromUserId") Integer fromUserId, @PathParam("toUserId") Integer toUserId,
                              @QueryParam("amount") Float amount,
                              @QueryParam("currency") String currency) {
-        float convertedCash = currencyConverterService.convertCash(amount, "EUR", currency);
+        float convertedCash = currencyConverterService.convertCash(amount, currency, "EUR");
         TransactionEntity transactionEntity = cashDataProviderBean.sendCash(fromUserId, toUserId, convertedCash);
         if (transactionEntity == null) {
             return Response.status(Response.Status.NOT_FOUND).build();

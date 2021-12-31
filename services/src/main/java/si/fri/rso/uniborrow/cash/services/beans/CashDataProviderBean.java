@@ -8,7 +8,7 @@ import si.fri.rso.uniborrow.cash.services.users.UsersService;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.ws.rs.NotAllowedException;
+import javax.persistence.NoResultException;
 import javax.ws.rs.NotFoundException;
 import java.time.Instant;
 import java.util.List;
@@ -29,7 +29,7 @@ public class CashDataProviderBean {
     @Counted
     public CashEntity addCash(Integer userId, Float amount) {
         if (!usersService.checkUserExists(userId)) {
-            throw new NotAllowedException("User doesn't exist.");
+            throw new NotFoundException("User doesn't exist.");
         }
         CashEntity cashData = getEntityByUserId(userId);
         if (cashData == null) {
@@ -63,7 +63,7 @@ public class CashDataProviderBean {
 
     public TransactionEntity sendCash(Integer fromUserId, Integer toUserId, Float amount) {
         if (!usersService.checkUserExists(fromUserId) || !usersService.checkUserExists(toUserId)) {
-            throw new NotAllowedException("User doesn't exist.");
+            throw new NotFoundException("User doesn't exist.");
         }
         CashEntity cashDataFrom = getEntityByUserId(fromUserId);
         if (cashDataFrom == null || cashDataFrom.getCurrentCash() < amount) {
@@ -93,8 +93,12 @@ public class CashDataProviderBean {
     }
 
     private CashEntity getEntityByUserId(Integer userId) {
-        return em.createQuery("SELECT t FROM CashEntity t where t.userId = :value1", CashEntity.class)
-                .setParameter("value1", userId).getSingleResult();
+        try {
+            return em.createQuery("SELECT t FROM CashEntity t where t.userId = :value1", CashEntity.class)
+                    .setParameter("value1", userId).getSingleResult();
+        } catch (NoResultException e) {
+            return null;
+        }
     }
 
     private List<TransactionEntity> getTransactionsByUserId(Integer userId) {
@@ -139,7 +143,7 @@ public class CashDataProviderBean {
             }
             return transactionEntity;
         }
-        throw new NotAllowedException("User doesn't exist.");
+        throw new NotFoundException("User doesn't exist.");
     }
 
 
