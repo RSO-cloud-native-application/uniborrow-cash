@@ -34,8 +34,11 @@ public class CashDataResource {
     public Response getCashByUserId(@PathParam("userId") Integer cashId, @QueryParam("currency") String currency) {
         CashEntity cashEntity = cashDataProviderBean.getCashByUserId(cashId);
         float convertedCash = currencyConverterService.convertCash(cashEntity.getCurrentCash(), "EUR", currency);
-        cashEntity.setCurrentCash(convertedCash);
-        return Response.status(Response.Status.OK).entity(cashEntity).build();
+        CashEntity responseCashEntity = new CashEntity();
+        responseCashEntity.setCurrentCash(convertedCash);
+        responseCashEntity.setUserId(cashId);
+        responseCashEntity.setId(cashEntity.getId());
+        return Response.status(Response.Status.OK).entity(responseCashEntity).build();
     }
 
     @POST
