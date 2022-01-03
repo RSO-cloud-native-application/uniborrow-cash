@@ -9,6 +9,7 @@ import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import javax.ws.rs.NotAllowedException;
 import javax.ws.rs.NotFoundException;
 import java.time.Instant;
 import java.util.List;
@@ -69,7 +70,7 @@ public class CashDataProviderBean {
         }
         CashEntity cashDataFrom = getEntityByUserId(fromUserId);
         if (cashDataFrom == null || cashDataFrom.getCurrentCash() < amount) {
-            throw new RuntimeException("Not enough money!");
+            throw new NotAllowedException("Not enough money!");
         }
         CashEntity cashDataTo = getEntityByUserId(toUserId);
         if (cashDataTo == null) {
