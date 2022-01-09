@@ -15,4 +15,6 @@ public class AdministrationProperties {
     private Boolean maintenanceMode;
 
     private Boolean broken = false;
+
+    private Boolean brokenExchangeApi = false;
 }

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - image:
-            efodx/uniborrow-cash:2022-01-03-23-39-49
+            efodx/uniborrow-cash:2022-01-10-00-53-54
           name: uniborrow-cash
           env:
             - name: KUMULUZEE_DATASOURCES0_CONNECTIONURL
@@ -34,6 +34,8 @@ spec:
               value: http://etcd:2379
             - name: KUMULUZEE_DISCOVERY_CLUSTER
               value: uniborrow-cluster
+            - name: KUMULUZEE_HEALTH_CHECKS_ETCDHEALTHCHECK_CONNETCIONURL
+              value: http://etcd:2379/health
           ports:
             - containerPort: 8080
               name: server
@@ -42,14 +44,14 @@ spec:
             httpGet:
               path: /health/live
               port: server
-            initialDelaySeconds: 60
+            initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 3
           readinessProbe:
             httpGet:
               path: /health/ready
               port: server
-            initialDelaySeconds: 60
+            initialDelaySeconds: 15
             periodSeconds: 10
             timeoutSeconds: 3
 
