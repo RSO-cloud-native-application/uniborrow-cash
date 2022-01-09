@@ -35,7 +35,7 @@ kumuluzee:
       mapping: /uniborrow-cash-openapi/ui
   dev:
     scan-libraries:
-      - reviews-lib
+      - cash-lib
   health:
     checks:
       data-source-health-check:
