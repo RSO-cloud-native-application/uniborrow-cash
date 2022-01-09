@@ -29,10 +29,10 @@ kumuluzee:
   openapi-mp:
     enabled: true
     servlet:
-      mapping: /uniborrow-cash-openapi/openapi
+      mapping: /uniborrow-cash-openapi/
     ui:
       enabled: true
-      mapping: /uniborrow-cash-openapi/openapi/ui
+      mapping: /uniborrow-cash-openapi/ui
   dev:
     scan-libraries:
       - reviews-lib
