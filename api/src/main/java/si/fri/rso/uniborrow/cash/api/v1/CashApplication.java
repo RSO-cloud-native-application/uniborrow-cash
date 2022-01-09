@@ -18,7 +18,7 @@ import javax.ws.rs.core.Application;
                 license = @License(name = "dev"),
                 description = "API for managing cash for Uniborrow application."
         ),
-        servers = @Server(url = "http://35.223.79.242/uniborrow-cash-openapi/")
+        servers = @Server(url = "http://35.223.79.242/uniborrow-cash/")
 )
 @RegisterService
 @ApplicationPath("/v1")
