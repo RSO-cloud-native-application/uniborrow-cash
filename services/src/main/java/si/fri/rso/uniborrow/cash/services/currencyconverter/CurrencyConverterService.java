@@ -30,18 +30,6 @@ public class CurrencyConverterService {
         if (administrationProperties.getBrokenExchangeApi()) {
             throw new InternalServerErrorException();
         }
-        Float response = webTarget.
-                queryParam("from", currencyFrom).
-                queryParam("to", currencyTo).
-                request(MediaType.APPLICATION_JSON_TYPE).
-                header("x-rapidapi-host", "currency-exchange.p.rapidapi.com").
-                header("x-rapidapi-key", "ea575f1580msh636fdf0dbab5542p1aa20cjsnd7d2d48fd4b0").
-                buildGet().
-                invoke(Float.class);
-        return response * cash;
-    }
-
-    public float convertCashFallback(float cash, String currencyFrom, String currencyTo) {
         Rates response = webTarget2.
                 path(currencyFrom).
                 request(MediaType.APPLICATION_JSON_TYPE).
@@ -52,5 +40,16 @@ public class CurrencyConverterService {
         return response.getRates().get(currencyTo) * cash;
     }
 
+    public float convertCashFallback(float cash, String currencyFrom, String currencyTo) {
+        Float response = webTarget.
+                queryParam("from", currencyFrom).
+                queryParam("to", currencyTo).
+                request(MediaType.APPLICATION_JSON_TYPE).
+                header("x-rapidapi-host", "currency-exchange.p.rapidapi.com").
+                header("x-rapidapi-key", "ea575f1580msh636fdf0dbab5542p1aa20cjsnd7d2d48fd4b0").
+                buildGet().
+                invoke(Float.class);
+        return response * cash;
+    }
 
 }
