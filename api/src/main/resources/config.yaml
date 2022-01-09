@@ -26,6 +26,16 @@ kumuluzee:
       web-instrumentation:
         - name: cash-endpoint
           url-pattern: /v1/cash/*
+  openapi-mp:
+    enabled: true
+    servlet:
+      mapping: /uniborrow-cash-openapi/openapi
+    ui:
+      enabled: true
+      mapping: /uniborrow-cash-openapi/openapi/ui
+  dev:
+    scan-libraries:
+      - reviews-lib
   health:
     checks:
       data-source-health-check:
