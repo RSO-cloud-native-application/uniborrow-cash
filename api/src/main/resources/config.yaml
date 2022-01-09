@@ -29,7 +29,7 @@ kumuluzee:
   openapi-mp:
     enabled: true
     servlet:
-      mapping: /uniborrow-cash-openapi/
+      mapping: /uniborrow-cash-openapi
     ui:
       enabled: true
       mapping: /uniborrow-cash-openapi/ui
