@@ -33,6 +33,7 @@ kumuluzee:
     ui:
       enabled: true
       mapping: /uniborrow-cash-openapi/ui
+      specification-server: http://35.223.79.242
   dev:
     scan-libraries:
       - cash-models
