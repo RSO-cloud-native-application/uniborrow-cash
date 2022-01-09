@@ -1,9 +1,15 @@
 package si.fri.rso.uniborrow.cash.services.currencyconverter;
 
+import org.eclipse.microprofile.faulttolerance.CircuitBreaker;
+import org.eclipse.microprofile.faulttolerance.Fallback;
+import org.eclipse.microprofile.faulttolerance.Retry;
+import org.eclipse.microprofile.faulttolerance.Timeout;
+
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
+import java.time.temporal.ChronoUnit;
 
 @RequestScoped
 public class CurrencyConverterService {
@@ -11,7 +17,11 @@ public class CurrencyConverterService {
     private final WebTarget webTarget = ClientBuilder.newClient().target("https://currency-exchange.p.rapidapi.com/exchange");
     private final WebTarget webTarget2 = ClientBuilder.newClient().target("https://exchangerate-api.p.rapidapi.com/rapid/latest");
 
-    public float convertCash2(float cash, String currencyFrom, String currencyTo) {
+    @Timeout(value = 2, unit = ChronoUnit.SECONDS)
+    @CircuitBreaker(requestVolumeThreshold = 3)
+    @Fallback(fallbackMethod = "convertCashFallback")
+    @Retry(maxRetries = 3)
+    public float convertCash(float cash, String currencyFrom, String currencyTo) {
         Float response = webTarget.
                 queryParam("from", currencyFrom).
                 queryParam("to", currencyTo).
@@ -23,7 +33,7 @@ public class CurrencyConverterService {
         return response * cash;
     }
 
-    public float convertCash(float cash, String currencyFrom, String currencyTo) {
+    public float convertCashFallback(float cash, String currencyFrom, String currencyTo) {
         Rates response = webTarget2.
                 path(currencyFrom).
                 request(MediaType.APPLICATION_JSON_TYPE).
