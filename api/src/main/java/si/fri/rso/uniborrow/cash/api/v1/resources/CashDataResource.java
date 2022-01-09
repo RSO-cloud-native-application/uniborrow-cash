@@ -184,7 +184,6 @@ public class CashDataResource {
             )
     })
     public Response getUserTransactions(@Parameter(
-            in = ParameterIn.QUERY,
             description = "User ID",
             required = true
     ) @PathParam("userId") Integer userId) {

@@ -29,10 +29,10 @@ kumuluzee:
   openapi-mp:
     enabled: true
     servlet:
-      mapping: /uniborrow-cash-openapi
+      mapping: /uniborrow-cash/openapi
     ui:
       enabled: true
-      mapping: /uniborrow-cash-openapi/ui
+      mapping: /uniborrow-cash/openapi/ui
       specification-server: http://35.223.79.242
   dev:
     scan-libraries:
