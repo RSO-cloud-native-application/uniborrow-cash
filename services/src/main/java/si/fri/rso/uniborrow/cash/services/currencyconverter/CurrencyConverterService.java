@@ -1,21 +1,17 @@
 package si.fri.rso.uniborrow.cash.services.currencyconverter;
 
-import si.fri.rso.uniborrow.cash.services.users.UsersService;
-
 import javax.enterprise.context.RequestScoped;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
-import java.util.logging.Logger;
 
 @RequestScoped
 public class CurrencyConverterService {
 
-    private Logger log = Logger.getLogger(UsersService.class.getName());
+    private final WebTarget webTarget = ClientBuilder.newClient().target("https://currency-exchange.p.rapidapi.com/exchange");
+    private final WebTarget webTarget2 = ClientBuilder.newClient().target("https://exchangerate-api.p.rapidapi.com/rapid/latest");
 
-    private WebTarget webTarget = ClientBuilder.newClient().target("https://currency-exchange.p.rapidapi.com/exchange");
-
-    public float convertCash(float cash, String currencyFrom, String currencyTo) {
+    public float convertCash2(float cash, String currencyFrom, String currencyTo) {
         Float response = webTarget.
                 queryParam("from", currencyFrom).
                 queryParam("to", currencyTo).
@@ -26,4 +22,17 @@ public class CurrencyConverterService {
                 invoke(Float.class);
         return response * cash;
     }
+
+    public float convertCash(float cash, String currencyFrom, String currencyTo) {
+        Rates response = webTarget2.
+                path(currencyFrom).
+                request(MediaType.APPLICATION_JSON_TYPE).
+                header("x-rapidapi-host", "exchangerate-api.p.rapidapi.com").
+                header("x-rapidapi-key", "ea575f1580msh636fdf0dbab5542p1aa20cjsnd7d2d48fd4b0").
+                buildGet().
+                invoke(Rates.class);
+        return response.getRates().get(currencyTo) * cash;
+    }
+
+
 }
